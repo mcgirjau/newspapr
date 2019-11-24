@@ -29,6 +29,8 @@
 #' get_top_headlines(keyword = "Panama Canal", page_size = 10, page = 2)
 #' get_top_headlines(country_iso = "br", category = "sport")
 #' get_top_headlines(keyword = "iPhone 10", source = "techcrunch")
+#'
+#' @export
 get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NULL, sources = NULL, page_size = NULL, page = NULL) {
   if (all(is.null(keyword), is.null(country_iso), is.null(category), is.null(sources))) {
     stop("Missing required parameters. Please set any of the following parameters and try again: keyword, sources, country, category", call. = FALSE)

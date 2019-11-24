@@ -18,6 +18,8 @@
 #'
 #' @examples
 #' get_sources(language = "de")
+#'
+#' @export
 get_sources <- function(category = NULL, language = NULL, country_iso = NULL) {
   if (!is.null(language)) {
     language <- tolower(language)

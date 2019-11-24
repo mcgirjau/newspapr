@@ -29,4 +29,5 @@ publishers available on the API.
 }
 \examples{
 get_sources(language = "de")
+
 }

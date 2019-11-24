@@ -50,4 +50,5 @@ country_iso or category.
 get_top_headlines(keyword = "Panama Canal", page_size = 10, page = 2)
 get_top_headlines(country_iso = "br", category = "sport")
 get_top_headlines(keyword = "iPhone 10", source = "techcrunch")
+
 }

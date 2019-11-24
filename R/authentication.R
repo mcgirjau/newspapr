@@ -25,6 +25,8 @@
 #' be written to your .Renviron file for use in all future R sessions. Defaults to FALSE.
 #'
 #' @importFrom stringr str_detect str_extract
+#'
+#' @export
 register_key <- function(key, write = FALSE) {
   if (missing(key)) {
     stop("Please enter your API key.", call. = FALSE)
@@ -58,6 +60,8 @@ register_key <- function(key, write = FALSE) {
 #' Display API key
 #'
 #' Displays the API key that has been registered.
+#'
+#' @export
 show_key <- function() {
   paste("Your NewsAPI key is:", .get_key())
 }
@@ -70,6 +74,8 @@ show_key <- function() {
 #'
 #' @return A boolean indicating whether an API key has been registered within the
 #' current R session.
+#'
+#' @export
 has_key <- function() {
   return(.has_key())
 }
@@ -85,6 +91,8 @@ has_key <- function() {
 #'
 #' @importFrom httr content status_code
 #' @importFrom dplyr case_when
+#'
+#' @export
 check_key <- function(key = NULL) {
   if (missing(key) && !.has_key()) {
     stop("No API key found. Please register it using register_key() or pass it as an argument to check_key().", call. = FALSE)
