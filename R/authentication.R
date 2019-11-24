@@ -14,6 +14,17 @@
   }
 }
 
+#' Register API key
+#'
+#' Returns the subset of news publishers that top headlines are available from.
+#' It's mainly a convenience function that can be used to keep track of the
+#' publishers available on the API.
+#'
+#' @param key A string. Your NewsAPI key.
+#' @param write (Optional) A boolean. Specifies whether you want your API key to
+#' be written to your .Renviron file for use in all future R sessions. Defaults to FALSE.
+#'
+#' @importFrom stringr str_detect str_extract
 register_key <- function(key, write = FALSE) {
   if (missing(key)) {
     stop("Please enter your API key.", call. = FALSE)
@@ -44,14 +55,36 @@ register_key <- function(key, write = FALSE) {
   }
 }
 
+#' Display API key
+#'
+#' Displays the API key that has been registered.
 show_key <- function() {
   paste("Your NewsAPI key is:", .get_key())
 }
 
+#' Check whether an API key has been registered
+#'
+#' Checks whether an API key has been registered within the current R session,
+#' either manually by using register_key(), or automatically from the .Renviron
+#' file.
+#'
+#' @return A boolean indicating whether an API key has been registered within the
+#' current R session.
 has_key <- function() {
   return(.has_key())
 }
 
+#' Check whether API key is valid
+#'
+#' Checks whether an API key is valid. Prints a message to let the user know whether
+#' their key is usable with NewsAPI (case in which the function prints "All OK"),
+#' or whether an error occurred (case in which the function prints a descriptive
+#' message of said error).
+#'
+#' @param api_key (Optional) A string. Your NewsAPI key.
+#'
+#' @importFrom httr content status_code
+#' @importFrom dplyr case_when
 check_key <- function(key = NULL) {
   if (missing(key) && !.has_key()) {
     stop("No API key found. Please register it using register_key() or pass it as an argument to check_key().", call. = FALSE)
@@ -60,10 +93,17 @@ check_key <- function(key = NULL) {
   }
   query <- paste0("https://newsapi.org/v2/top-headlines?country=us&apiKey=", key)
   status_code <- httr::status_code(httr::GET(query))
-  case_when(
-    status_code == 200 ~ "OK",
-    status_code == 401 ~ "Unauthorized",
-    status_code == 429 ~ "Too Many Requests",
-    status_code == 429 ~ "Server Error",
-  )
+  if (status_code == 200) {
+    message("All OK.")
+  } else {
+    error <- httr::content(httr::GET(query))[["code"]]
+    message <- dplyr::case_when(
+      error == "apiKeyInvalid" ~ "NewsAPI.org says: Your API key hasn't been entered correctly. Double check it and try again.",
+      error == "apiKeyDisabled" ~ "NewsAPI.org says: Your API key has been disabled.",
+      error == "apiKeyExhausted" ~ "NewsAPI.org says: Your API key has no more requests available.",
+      error == "rateLimited" ~ "NewsAPI.org says: You have been rate limited. Back off for a while before trying the request again.",
+      error == "unexpectedError" ~ "NewsAPI.org says: This shouldn't happen, and if it does then it's our fault, not yours. Try the request again shortly."
+      )
+    message(message)
+  }
 }

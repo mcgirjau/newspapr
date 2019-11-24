@@ -1,4 +1,4 @@
-get_everything <- function(keyword = NULL, keyword_in_title = NULL, sources = NULL, domains = NULL, exclude_domains = NULL, from = NULL, to = NULL, language = NULL, sort_by = NULL, page_size = NULL, page = NULL) {
+get_everything <- function(keyword = NULL, keyword_in_title = NULL, exact_match = NULL, must_appear = NULL, must_not_appear = NULL, sources = NULL, domains = NULL, exclude_domains = NULL, from = NULL, to = NULL, language = NULL, sort_by = NULL, page_size = NULL, page = NULL) {
   if (all(is.null(keyword), is.null(country_iso), is.null(category), is.null(sources))) {
     stop("Missing required parameters. Please set any of the following parameters and try again: keyword, sources, country, category", call. = FALSE)
   }

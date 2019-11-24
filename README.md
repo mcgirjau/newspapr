@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. -->
 
-# newspapr <img src="logo.png" width="160px" align="right"/>
+# newspapr <img src="man/figures/logo.png" width="160px" align="right"/>
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-newspapr is a wrapper package for [NewsAPI](https://newsapi.org/) in R.
+newspapr is an R wrapper package for [NewsAPI](https://newsapi.org/).
 
 ## Installation
 

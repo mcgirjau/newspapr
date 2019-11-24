@@ -3,13 +3,12 @@ Title: API wrapper for NewsAPI
 Version: 1.0
 Authors@R: person(given = "Maria-Cristiana", family = "Girjau", role = c("aut", "cre"), email = "mgirjau21@amherst.edu")
 Description: A set of functions for using NewsAPI from within R.
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.1.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
-Imports:
-  dplyr
-  httr
-  stringr
+RoxygenNote: 7.0.0
+Imports: dplyr (>= 0.8.3),
+         httr (>= 1.4.1),
+         stringr (>= 1.4.0)
 VignetteBuilder: knitr
