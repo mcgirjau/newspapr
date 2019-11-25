@@ -42,7 +42,7 @@ get_sources <- function(category = NULL, language = NULL, country = NULL) {
   }
 
   if (!is.null(country)) {
-    .check_country_iso(country)
+    .check_country(country)
     # change country to NewsAPI-compatible ISO code if not already so
     if (!grepl("^.{2}$", country)) {
       country <- .country_to_iso(country)
@@ -59,7 +59,7 @@ get_sources <- function(category = NULL, language = NULL, country = NULL) {
   sources <- request %>%
     httr::content() %>%
     .[["sources"]] %>%
-    {do.call(rbind.data.frame, .)}
+    {do.call(rbind.data.frame, c(., stringsAsFactors=FALSE))}
 
   return(sources)
 

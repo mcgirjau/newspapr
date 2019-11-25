@@ -38,25 +38,8 @@
   if (status_code == 200) {
     return()
   } else {
-    code <- httr::content(request)[["code"]]
-
-    error <- dplyr::case_when(
-
-      code == "apiKeyInvalid" ~ paste("NewsAPI.org says: Your API key hasn't been",
-                                       "entered correctly. Double check it and try again."),
-
-      code == "apiKeyDisabled" ~ "NewsAPI.org says: Your API key has been disabled.",
-
-      code == "apiKeyExhausted" ~ "NewsAPI.org says: Your API key has no more requests available.",
-
-      code == "rateLimited" ~ paste("NewsAPI.org says: You have been rate limited.",
-                                     "Back off for a while before trying the request again."),
-
-      code == "unexpectedError" ~ paste("NewsAPI.org says: This shouldn't happen,",
-                                         "and if it does then it's our fault, not yours.",
-                                         "Try the request again shortly.")
-    )
-
+    message <- httr::content(request)[["message"]]
+    error <- paste("NewsAPI says:", message)
     stop(error, call. = FALSE)
   }
 }
@@ -64,6 +47,26 @@
 # -----------------------------------------------------------------------------
 # ARGUMENT CHECKERS - check that the arguments provided by the user are
 #                     compatible with NewsAPI
+# -----------------------------------------------------------------------------
+
+.has_required_arguments <- function(keyword, country, category, sources) {
+  if (all(is.null(keyword), is.null(country), is.null(category), is.null(sources))) {
+    error <- paste("Missing required parameters. Please set any of the following",
+                   "parameters and try again: keyword, sources, country, category.")
+    stop(error, call. = FALSE)
+  }
+}
+
+# -----------------------------------------------------------------------------
+
+.has_compatible_parameters <- function(country, category, sources) {
+  if (!is.null(sources) && (!is.null(country_iso) || !is.null(category))) {
+    error <- paste("Incompatible parameters. The sources parameter cannot be mixed",
+                   "with country or category.")
+    stop(error, call. = FALSE)
+  }
+}
+
 # -----------------------------------------------------------------------------
 
 .check_category <- function(category) {
@@ -123,6 +126,45 @@
 }
 
 # -----------------------------------------------------------------------------
+
+.check_sources <- function(sources) {
+
+  sources_name <- get_sources()$name
+  sources_id <- get_sources()$id
+  sources_url <- get_sources()$url
+
+  for (source in sources) {
+    if (!(source %in% sources_name || source %in% sources_id || source %in% sources_url)) {
+      error <- paste("Invalid source,", source, "- please use get_sources() to",
+                     "see available sources. You can enter name, ID, or URL.")
+      stop(error, call. = FALSe)
+    }
+  }
+}
+
+# -----------------------------------------------------------------------------
+
+.check_page_size <- function(page_size) {
+  if (is.logical(page_size) || is.na(as.numeric(page_size)) ||
+      as.numeric(page_size) < 0 || page_size %% 1 != 0 || page_size > 100) {
+    error <- paste("Invalid page size parameter. Must be a whole number",
+                   "between 0 and 100, e.g. 25.")
+    stop(error, call. = FALSE)
+  }
+}
+
+# -----------------------------------------------------------------------------
+
+.check_page <- function(page) {
+  if (is.logical(page) || is.na(as.numeric(page)) || as.numeric(page) < 0 ||
+      page_size %% 1 != 0) {
+    error <- paste("Invalid page parameter. Must be a whole, positive number",
+                   "e.g. 2.")
+    stop(error, call. = FALSE)
+  }
+}
+
+# -----------------------------------------------------------------------------
 # ARGUMENT CONVERTERS - convert the more flexible R format into one ready for
 #                       NewsAPI queries
 # -----------------------------------------------------------------------------
@@ -157,3 +199,18 @@
   # add functionality here
 }
 
+# -----------------------------------------------------------------------------
+
+.sources_to_csv <- function(sources) {
+
+  targets <- character(0)
+
+  for (source in sources) {
+    id <- subset(get_sources(), id == source | name == source | url == source)$id
+    targets <- append(targets, id)
+  }
+
+  # removing leading comma
+  csv <- paste(targets, collapse = ",")
+  return(csv)
+}
