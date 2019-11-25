@@ -14,5 +14,4 @@ RoxygenNote: 7.0.0
 Imports: curl,
          dplyr,
          httr,
-         jsonlite,
          stringr
