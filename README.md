@@ -7,6 +7,9 @@
 
 newspapr is an R wrapper package for [NewsAPI](https://newsapi.org/).
 
+NewsAPI provides access to live breaking news headlines and articles
+from over 30,000 worldwide news sources and blogs.
+
 ## Installation
 
 ``` r
@@ -52,38 +55,21 @@ check_key()
 `newspapr` supports all 3 of the NewsAPI
 [endpoints](https://newsapi.org/docs/endpoints):
 
-  - `/v2/top-headlines`
-  - `/v2/everything`
-  - `/v2/sources`
+  - `/v2/top-headlines` - “This endpoint provides live top and breaking
+    headlines for a country, specific category in a country, single
+    source, or multiple sources. You can also search with keywords.
+    Articles are sorted by the earliest date published first.”
+  - `/v2/everything` - “Search through millions of articles from over
+    30,000 large and small news sources and blogs. This includes
+    breaking news as well as lesser articles. This endpoint suits
+    article discovery and analysis, but can be used to retrieve articles
+    for display, too.”
+  - `/v2/sources` - “This endpoint returns the subset of news publishers
+    that top headlines (`/v2/top-headlines`) are available from. It’s
+    mainly a convenience endpoint that you can use to keep track of the
+    publishers available on the API.”
 
-<!-- # TO DO -->
+## Usage
 
-<!-- - write package to mirror exactly all capabilities of the NewsAPI -->
-
-<!-- - create Shiny app to implement all of the functions written in GUI form -->
-
-<!-- - implement special machine learning algorithm to detect if news headline is -->
-
-<!-- sensationalist or not -->
-
-<!-- - word cloud generator -->
-
-<!-- - sentiment analysis (i.e. put in given term, be told if news are good or bad) -->
-
-<!-- - trend plots of terms over time -->
-
-<!-- - daily update feature (today's top news based on user preference) -->
-
-<!-- For the Shiny client, things to include: -->
-
-<!-- - set preferred languages -->
-
-<!-- - choose publication -->
-
-<!-- ## Usage -->
-
-<!-- For how to use `newspapr`, please see the [vignette](https://#) or the [documentation](https://#). -->
-
-<!-- ## Showcase -->
-
-<!-- Check out a news recommendation system built using newspapr -->
+For how to use newspapr, please read the
+[documentation](https://github.com/mcgirjau/newspapr/blob/master/newspapr.pdf).
