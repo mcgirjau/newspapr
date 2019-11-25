@@ -69,7 +69,7 @@ get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NUL
       stop("Invalid page parameter. Parameter page must be a whole, positive number, e.g. 5. Please try again", call. = FALSE)
     }
   }
-  if (!is.null(sources)){
+  if (!is.null(sources)) {
     # check that source is valid using list of sources from API endpoint
     # modify character vector so that its valid csv
   }
