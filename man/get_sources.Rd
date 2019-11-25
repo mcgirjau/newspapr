@@ -28,6 +28,6 @@ It's mainly a convenience function that can be used to keep track of the
 publishers available on the API.
 }
 \examples{
-get_sources(language = "de")
+get_sources(language = "German")
 
 }

@@ -72,4 +72,4 @@ check_key()
 ## Usage
 
 For how to use newspapr, please read the
-[documentation](https://github.com/mcgirjau/newspapr/blob/master/newspapr.pdf).
+[documentation](https://github.com/mcgirjau/newspapr/blob/master/newspapr-manual.pdf).

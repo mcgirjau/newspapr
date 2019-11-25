@@ -7,7 +7,7 @@
 check_key(key = NULL)
 }
 \arguments{
-\item{api_key}{(Optional) A string. Your NewsAPI key.}
+\item{key}{(Optional) A string. Your NewsAPI key.}
 }
 \description{
 Checks whether an API key is valid. Prints a message to let the user know whether

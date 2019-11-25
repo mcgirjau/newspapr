@@ -30,6 +30,8 @@
 #' get_top_headlines(country_iso = "br", category = "sport")
 #' get_top_headlines(keyword = "iPhone 10", source = "techcrunch")
 #'
+#' @importFrom dplyr "%>%"
+#'
 #' @export
 get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NULL, sources = NULL, page_size = NULL, page = NULL) {
   if (all(is.null(keyword), is.null(country_iso), is.null(category), is.null(sources))) {
@@ -46,7 +48,7 @@ get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NUL
                     "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro",
                     "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw",
                     "ua", "us", "ve", "za")
-    if (length(country_iso) != 2) {
+    if (!grepl("^.{2}$", country_iso)) {
       stop("Invalid country parameter. Parameter country_iso must be a 2-letter ISO 3166-1 code, e.g. \"US\" or \"FR\"", call. = FALSE)
     } else if (!(country_iso %in% .iso_codes)) {
       stop(paste(country_iso, "is not a valid ISO 3166-1 code. Please try again"), call. = FALSE)
@@ -54,7 +56,7 @@ get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NUL
   }
   if (!is.null(page_size)) {
     if (is.logical(page_size) || is.na(as.numeric(page_size)) || as.numeric(page_size) < 0 ||
-        !is.integer(as.numeric(page_size))) {
+        page_size %% 1 != 0) {
       stop("Invalid page size parameter. Parameter page_size must be a whole, positive number, e.g. 5. Please try again", call. = FALSE)
     }
     if (page_size > 100) {
@@ -63,7 +65,7 @@ get_top_headlines <- function(keyword = NULL, country_iso = NULL, category = NUL
   }
   if (!is.null(page)) {
     if (is.logical(page) || is.na(as.numeric(page)) || as.numeric(page) < 0 ||
-        !is.integer(as.numeric(page))) {
+        page_size %% 1 != 0) {
       stop("Invalid page parameter. Parameter page must be a whole, positive number, e.g. 5. Please try again", call. = FALSE)
     }
   }

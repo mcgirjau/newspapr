@@ -87,13 +87,17 @@ has_key <- function() {
 #' or whether an error occurred (case in which the function prints a descriptive
 #' message of said error).
 #'
-#' @param api_key (Optional) A string. Your NewsAPI key.
+#' @param key (Optional) A string. Your NewsAPI key.
 #'
+#' @importFrom curl has_internet
 #' @importFrom httr content status_code
 #' @importFrom dplyr case_when
 #'
 #' @export
 check_key <- function(key = NULL) {
+  if (!curl::has_internet()) {
+    stop("Please check your internet connection and try again.")
+  }
   if (missing(key) && !.has_key()) {
     stop("No API key found. Please register it using register_key() or pass it as an argument to check_key().", call. = FALSE)
   } else if (missing(key)) {

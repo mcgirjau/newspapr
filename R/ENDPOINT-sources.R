@@ -17,7 +17,9 @@
 #' @return A list of news publishers.
 #'
 #' @examples
-#' get_sources(language = "de")
+#' get_sources(language = "German")
+#'
+#' @importFrom dplyr "%>%"
 #'
 #' @export
 get_sources <- function(category = NULL, language = NULL, country_iso = NULL) {
@@ -37,9 +39,11 @@ get_sources <- function(category = NULL, language = NULL, country_iso = NULL) {
       language == "russian" ~ "ru",
       language == "swedish" ~ "se",
       language == "urdu" ~ "ud",
-      language == "chinese" ~ "zh",
-      TRUE ~ stop("Invalid language. Available languages are: Arabic, German, English, Spanish, French, Hebrew, Italian, Dutch, Norwegian, Portuguese, Russian, Swedish, Urdu, and Chinese.", call. = FALSE)
+      language == "chinese" ~ "zh"
     )
+    if (is.na(language)) {
+      stop("Invalid language. Available languages are: Arabic, German, English, Spanish, French, Hebrew, Italian, Dutch, Norwegian, Portuguese, Russian, Swedish, Urdu, and Chinese.", call. = FALSE)
+    }
   }
   if (!is.null(country_iso)) {
     country_iso <- tolower(country_iso)
