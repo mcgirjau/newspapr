@@ -1,3 +1,4 @@
+
 .has_key <- function() {
   key <- Sys.getenv("NEWS_API_KEY")
   if (any(is.null(key), identical(key, ""))) {
@@ -6,6 +7,8 @@
   return(TRUE)
 }
 
+# -----------------------------------------------------------------------------
+
 .get_key <- function() {
   if (!.has_key()) {
     stop("Could not find NewsAPI key. Please register it using register_key().", call. = FALSE)
@@ -13,6 +16,8 @@
     return(Sys.getenv("NEWS_API_KEY"))
   }
 }
+
+# -----------------------------------------------------------------------------
 
 #' Register API key
 #'
@@ -57,6 +62,8 @@ register_key <- function(key, write = FALSE) {
   }
 }
 
+# -----------------------------------------------------------------------------
+
 #' Display API key
 #'
 #' Displays the API key that has been registered.
@@ -65,6 +72,8 @@ register_key <- function(key, write = FALSE) {
 show_key <- function() {
   paste("Your NewsAPI key is:", .get_key())
 }
+
+# -----------------------------------------------------------------------------
 
 #' Check whether an API key has been registered
 #'
@@ -79,6 +88,8 @@ show_key <- function() {
 has_key <- function() {
   return(.has_key())
 }
+
+# -----------------------------------------------------------------------------
 
 #' Check whether API key is valid
 #'
@@ -95,27 +106,17 @@ has_key <- function() {
 #'
 #' @export
 check_key <- function(key = NULL) {
-  if (!curl::has_internet()) {
-    stop("Please check your internet connection and try again.")
-  }
+
+  .check_internet()
+
   if (missing(key) && !.has_key()) {
     stop("No API key found. Please register it using register_key() or pass it as an argument to check_key().", call. = FALSE)
   } else if (missing(key)) {
     key <- .get_key()
   }
+
   query <- paste0("https://newsapi.org/v2/top-headlines?country=us&apiKey=", key)
-  status_code <- httr::status_code(httr::GET(query))
-  if (status_code == 200) {
-    message("All OK.")
-  } else {
-    error <- httr::content(httr::GET(query))[["code"]]
-    message <- dplyr::case_when(
-      error == "apiKeyInvalid" ~ "NewsAPI.org says: Your API key hasn't been entered correctly. Double check it and try again.",
-      error == "apiKeyDisabled" ~ "NewsAPI.org says: Your API key has been disabled.",
-      error == "apiKeyExhausted" ~ "NewsAPI.org says: Your API key has no more requests available.",
-      error == "rateLimited" ~ "NewsAPI.org says: You have been rate limited. Back off for a while before trying the request again.",
-      error == "unexpectedError" ~ "NewsAPI.org says: This shouldn't happen, and if it does then it's our fault, not yours. Try the request again shortly."
-      )
-    message(message)
-  }
+  request <- httr::GET(query)
+  .check_request(request)
+  return("All OK.")
 }

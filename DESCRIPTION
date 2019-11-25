@@ -1,6 +1,6 @@
 Package: newspapr
-Title: API wrapper for NewsAPI
-Version: 1.0
+Title: API Wrapper for NewsAPI
+Version: 0.0.0.9000
 Authors@R: person(given = "Maria-Cristiana", 
                   family = "Girjau", 
                   role = c("aut", "cre"), 
@@ -14,4 +14,5 @@ RoxygenNote: 7.0.0
 Imports: curl,
          dplyr,
          httr,
+         jsonlite,
          stringr
