@@ -33,11 +33,11 @@
 #'
 #' @export
 register_key <- function(key, write = FALSE) {
+
   if (missing(key)) {
     stop("Please enter your API key.", call. = FALSE)
-  } else {
-    key <- deparse(substitute(key))
   }
+
   if (write) {
     environ_file <- file.path(Sys.getenv("HOME"), ".Renviron")
     if (!file.exists(file.path(Sys.getenv("HOME"), ".Renviron"))) {

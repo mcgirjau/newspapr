@@ -136,7 +136,10 @@
   for (source in sources) {
     if (!(source %in% sources_name || source %in% sources_id || source %in% sources_url)) {
       error <- paste("Invalid source,", source, "- please use get_sources() to",
-                     "see available sources. You can enter name, ID, or URL.")
+                     "see available sources for NewsAPI queries. You can enter",
+                     "name, ID, or URL. Please note that the set of sources",
+                     "that can be used in a query is only a small subset of all",
+                     "available sources that return articles.")
       stop(error, call. = FALSE)
     }
   }
@@ -221,6 +224,7 @@
 # -----------------------------------------------------------------------------
 
 #' @importFrom dplyr "%>%"
+#' @importFrom tibble as_tibble
 .extract_articles <- function(request) {
 
   article_list <- request %>%
@@ -229,7 +233,7 @@
 
   # remove nested sublists with repetitive source information
   article_list <- lapply(article_list, function(x) {
-    x[[1]] <- unlist(x$source)[2]
+    x[[1]] <- x$source$name
     return(x)
   })
 
@@ -237,14 +241,16 @@
   article_list <- lapply(article_list, function(x) {
     x <- lapply(x, function(element) {
       if (is.null(element)) {
-        element <- ""
+        element <- NA
       }
       return(element)
     })
     return(x)
   })
 
-  # convert to data frame
-  articles <- do.call(rbind.data.frame, c(article_list, stringsAsFactors = FALSE))
+  # convert to tibble
+  articles <- do.call(rbind.data.frame, c(article_list, stringsAsFactors = FALSE)) %>%
+    tibble::as_tibble() %>%
+    janitor::clean_names()
   return(articles)
 }

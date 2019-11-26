@@ -2,7 +2,11 @@
 #'
 #' Returns the subset of news publishers that top headlines are available from.
 #' It's mainly a convenience function that can be used to keep track of the
-#' publishers available on the API.
+#' publishers available on the API. It seems a large amount of sources that do
+#' return top headlines are not included by NewsAPI in their output. As such,
+#' these sources cannot be used in a query, although they do return results.
+#' The complete index of sources that can be used in a NewsAPI query is obtained
+#' using get_sources().
 #'
 #' @param category (Optional) A string. Find sources that display news of a
 #' specific category. Possible options are: "business", "entertainment",
@@ -17,7 +21,7 @@
 #' want to get headlines for, such as "US" or "FR". This parameter cannot be mixed with
 #' the sources parameter.
 #'
-#' @return A data frame of news publishers, with their ID as it should be queried
+#' @return A tibble of news publishers, with their ID as it should be queried
 #' in a NewsAPI request, a short description, their URL, their category, their
 #' language, and their country.
 #'
@@ -25,6 +29,7 @@
 #' get_sources(language = "German")
 #'
 #' @importFrom dplyr "%>%"
+#' @importFrom tibble as_tibble
 #'
 #' @export
 get_sources <- function(category = NULL, language = NULL, country = NULL) {
@@ -59,7 +64,9 @@ get_sources <- function(category = NULL, language = NULL, country = NULL) {
   sources <- request %>%
     httr::content() %>%
     .[["sources"]] %>%
-    {do.call(rbind.data.frame, c(., stringsAsFactors = FALSE))}
+    {do.call(rbind.data.frame, c(., stringsAsFactors = FALSE))} %>%
+    tibble::as_tibble() %>%
+    janitor::clean_names()
 
   return(sources)
 

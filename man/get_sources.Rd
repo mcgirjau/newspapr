@@ -23,7 +23,7 @@ want to get headlines for, such as "US" or "FR". This parameter cannot be mixed 
 the sources parameter.}
 }
 \value{
-A data frame of news publishers, with their ID as it should be queried
+A tibble of news publishers, with their ID as it should be queried
 in a NewsAPI request, a short description, their URL, their category, their
 language, and their country.
 }

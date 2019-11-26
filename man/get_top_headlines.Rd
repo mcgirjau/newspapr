@@ -37,7 +37,7 @@ The API's default is 20, and the maximum is 100.}
 results found is greater than the page size.}
 }
 \value{
-A data frame of article information, with source, author, title,
+A tibble of article information, with source, author, title,
 description, URL, publication date, and a short preview of the content.
 }
 \description{

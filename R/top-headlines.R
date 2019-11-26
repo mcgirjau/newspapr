@@ -22,7 +22,7 @@
 #' @param page (Optional) An integer. Use this to page through the results if the total
 #' results found is greater than the page size.
 #'
-#' @return A data frame of article information, with source, author, title,
+#' @return A tibble of article information, with source, author, title,
 #' description, URL, publication date, and a short preview of the content.
 #'
 #' @examples
