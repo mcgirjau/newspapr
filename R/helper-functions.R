@@ -60,7 +60,7 @@
 # -----------------------------------------------------------------------------
 
 .has_compatible_parameters <- function(country, category, sources) {
-  if (!is.null(sources) && (!is.null(country_iso) || !is.null(category))) {
+  if (!is.null(sources) && (!is.null(country) || !is.null(category))) {
     error <- paste("Incompatible parameters. The sources parameter cannot be mixed",
                    "with country or category.")
     stop(error, call. = FALSE)
@@ -157,7 +157,7 @@
 
 .check_page <- function(page) {
   if (is.logical(page) || is.na(as.numeric(page)) || as.numeric(page) < 0 ||
-      page_size %% 1 != 0) {
+      page %% 1 != 0) {
     error <- paste("Invalid page parameter. Must be a whole, positive number",
                    "e.g. 2.")
     stop(error, call. = FALSE)

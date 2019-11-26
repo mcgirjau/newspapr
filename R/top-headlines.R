@@ -7,7 +7,7 @@
 #'
 #' @param keyword (Optional) A string. Keyword(s) based on which to search for articles,
 #' such as "Hong Kong protests" or "Amazon forest".
-#' @param country_iso (Optional) A string. The 2-letter ISO 3166-1 code of the country you
+#' @param country (Optional) A string. The 2-letter ISO 3166-1 code of the country you
 #' want to get headlines for, such as "US" or "FR". This parameter cannot be mixed with
 #' the sources parameter.
 #' @param category (Optional) A string. The category you want to get top headlines for, such
@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' get_top_headlines(keyword = "Panama Canal", page_size = 10, page = 2)
-#' get_top_headlines(country_iso = "br", category = "sport")
+#' get_top_headlines(country = "br", category = "sports")
 #' get_top_headlines(keyword = "iPhone 10", source = "techcrunch")
 #'
 #' @export
