@@ -49,10 +49,17 @@
 #                     compatible with NewsAPI
 # -----------------------------------------------------------------------------
 
-.has_required_arguments <- function(keyword, country, category, sources) {
-  if (all(is.null(keyword), is.null(country), is.null(category), is.null(sources))) {
+.has_required_parameters <- function(keyword = NULL, title_keyword = NULL,
+                                     country = NULL, category = NULL,
+                                     sources = NULL, domains = NULL) {
+
+  args <- list(keyword, title_keyword, country, category, sources, domains)
+
+  if (all(sapply(args, is.null))) {
     error <- paste("Missing required parameters. Please set any of the following",
-                   "parameters and try again: keyword, sources, country, category.")
+                   "parameters and try again: keyword, sources, country, category",
+                   "(for top headlines) or: keyword, title_keyword, sources,",
+                   "domains (for everything).")
     stop(error, call. = FALSE)
   }
 }
@@ -116,7 +123,7 @@
                    "through the NewsAPI, see https://newsapi.org/docs/endpoints/sources.")
     stop(error, call. = FALSE)
 
-  } else if (!(country %in% countries)) {
+  } else if (!(tolower(country) %in% countries)) {
 
     error <- paste("Invalid ISO code.", country, "is either not a valid ISO 3166-1",
                    "code, or it is not currently supported. For a full list of the",
@@ -143,6 +150,26 @@
       stop(error, call. = FALSE)
     }
   }
+}
+
+# -----------------------------------------------------------------------------
+
+#' @importFrom parsedate parse_date format_iso_8601
+.check_date <- function(date) {
+  date <- parsedate::parse_date(date) %>%
+    parsedate::format_iso_8601()
+  if (is.na(date)) {
+    error <- paste("Invalid date(s) for parameters to and/or from. Please enter a",
+                  "valid date, preferably in ISO 8601 format, e.g. 2019-01-01T17:15:00.")
+    stop(error, call. = FALSE)
+  }
+}
+
+# -----------------------------------------------------------------------------
+
+.check_sort <- function(string) {
+  options <- c("relevancy", "popularity", "published at")
+
 }
 
 # -----------------------------------------------------------------------------
@@ -219,12 +246,29 @@
 }
 
 # -----------------------------------------------------------------------------
+
+.domains_to_csv <- function(domains) {
+  csv <- paste(domains, collapse = ",")
+  return(csv)
+}
+
+# -----------------------------------------------------------------------------
+
+#' @importFrom parsedate parse_date format_iso_8601
+.date_to_iso <- function(date) {
+  date <- parsedate::parse_date(date) %>%
+    parsedate::format_iso_8601()
+  return(date)
+}
+
+# -----------------------------------------------------------------------------
 # ARTICLE EXTRACTOR - gets articles from HTTP request, removes NULL values, and
 #                     converts to data frame
 # -----------------------------------------------------------------------------
 
 #' @importFrom dplyr "%>%"
 #' @importFrom tibble as_tibble
+#' @importFrom janitor clean_names
 .extract_articles <- function(request) {
 
   article_list <- request %>%

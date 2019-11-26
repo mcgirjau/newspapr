@@ -1,12 +1,12 @@
 #' Get top headlines articles
 #'
 #' Returns a list of current top headlines articles based on some query. At least
-#' one parameter from among keyword, country_iso, category, and sources must be
+#' one parameter from among keyword, country, category, and sources must be
 #' specified, with the limitation that the sources parameter cannot be mixed with
-#' country_iso or category.
+#' country or category.
 #'
-#' @param keyword (Optional) A string. Keyword(s) based on which to search for articles,
-#' such as "Hong Kong protests" or "Amazon forest".
+#' @param keyword (Optional) A string. Keyword(s) based on which to search for
+#'     articles, such as "Hong Kong protests" or "Amazon forest".
 #' @param country (Optional) A string. The 2-letter ISO 3166-1 code of the country you
 #' want to get headlines for, such as "US" or "FR". This parameter cannot be mixed with
 #' the sources parameter.
@@ -34,7 +34,8 @@
 get_top_headlines <- function(keyword = NULL, country = NULL, category = NULL,
                               sources = NULL, page_size = NULL, page = NULL) {
 
-  .has_required_arguments(keyword, country, category, sources)
+  .has_required_parameters(keyword = keyword, country = country, category = category,
+                           sources = sources)
 
   .has_compatible_parameters(country, category, sources)
 

@@ -15,5 +15,6 @@ Imports: curl,
          dplyr,
          httr,
          janitor,
+         parsedate,
          stringr,
          tibble

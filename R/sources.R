@@ -15,7 +15,7 @@
 #' @param language (Optional) A string. Find sources that display news in a specific language.
 #' Possible options are: Arabic, German, English, Spanish, French, Hebrew, Italian
 #' Dutch, Norwegian, Portuguese, Russian, Swedish, Urdu, and Chinese. The language
-#' cam also be specified using ISO codes, e.g. "DE" for German or "ES" for Spanish.
+#' can also be specified using ISO codes, e.g. "DE" for German or "ES" for Spanish.
 #' By default, the API returns sources in all languages.
 #' @param country (Optional) A string. The 2-letter ISO 3166-1 code of the country you
 #' want to get headlines for, such as "US" or "FR". This parameter cannot be mixed with
@@ -30,6 +30,7 @@
 #'
 #' @importFrom dplyr "%>%"
 #' @importFrom tibble as_tibble
+#' @importFrom janitor clean_names
 #'
 #' @export
 get_sources <- function(category = NULL, language = NULL, country = NULL) {
