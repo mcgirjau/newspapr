@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. -->
 
-# newspapr <img src="man/figures/logo.png" width="160px" align="right"/>
+# newspapr <img src="man/figures/logo.png" title="logo created with hexSticker" width="160px" align="right"/>
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 

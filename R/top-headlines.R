@@ -22,15 +22,13 @@
 #' @param page (Optional) An integer. Use this to page through the results if the total
 #' results found is greater than the page size.
 #'
-#' @return A nested list of articles, including source, author, title, description,
-#' URL, publication date, and a short preview of the content.
+#' @return A data frame of article information, with source, author, title,
+#' description, URL, publication date, and a short preview of the content.
 #'
 #' @examples
 #' get_top_headlines(keyword = "Panama Canal", page_size = 10, page = 2)
 #' get_top_headlines(country_iso = "br", category = "sport")
 #' get_top_headlines(keyword = "iPhone 10", source = "techcrunch")
-#'
-#' @importFrom dplyr "%>%"
 #'
 #' @export
 get_top_headlines <- function(keyword = NULL, country = NULL, category = NULL,
@@ -73,9 +71,7 @@ get_top_headlines <- function(keyword = NULL, country = NULL, category = NULL,
   request <- httr::GET(query_url)
   .check_request(request)
 
-  articles <- request %>%
-    httr::content() %>%
-    .[["articles"]]
+  articles <- .extract_articles(request)
 
   return(articles)
 }

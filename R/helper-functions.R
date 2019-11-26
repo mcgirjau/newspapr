@@ -214,3 +214,37 @@
   csv <- paste(targets, collapse = ",")
   return(csv)
 }
+
+# -----------------------------------------------------------------------------
+# ARTICLE EXTRACTOR - gets articles from HTTP request, removes NULL values, and
+#                     converts to data frame
+# -----------------------------------------------------------------------------
+
+#' @importFrom dplyr "%>%"
+.extract_articles <- function(request) {
+
+  article_list <- request %>%
+    httr::content() %>%
+    .[["articles"]]
+
+  # remove nested sublists with repetitive source information
+  article_list <- lapply(article_list, function(x) {
+    x[[1]] <- unlist(x$source)[2]
+    return(x)
+  })
+
+  # remove NULL values from fields
+  article_list <- lapply(article_list, function(x) {
+    x <- lapply(x, function(element) {
+      if (is.null(element)) {
+        element <- ""
+      }
+      return(element)
+    })
+    return(x)
+  })
+
+  # convert to data frame
+  articles <- do.call(rbind.data.frame, c(article_list, stringsAsFactors=FALSE))
+  return(articles)
+}
