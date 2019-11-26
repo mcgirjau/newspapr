@@ -137,7 +137,7 @@
     if (!(source %in% sources_name || source %in% sources_id || source %in% sources_url)) {
       error <- paste("Invalid source,", source, "- please use get_sources() to",
                      "see available sources. You can enter name, ID, or URL.")
-      stop(error, call. = FALSe)
+      stop(error, call. = FALSE)
     }
   }
 }
@@ -245,6 +245,6 @@
   })
 
   # convert to data frame
-  articles <- do.call(rbind.data.frame, c(article_list, stringsAsFactors=FALSE))
+  articles <- do.call(rbind.data.frame, c(article_list, stringsAsFactors = FALSE))
   return(articles)
 }

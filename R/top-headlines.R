@@ -75,5 +75,3 @@ get_top_headlines <- function(keyword = NULL, country = NULL, category = NULL,
 
   return(articles)
 }
-
-

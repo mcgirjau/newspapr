@@ -59,7 +59,7 @@ get_sources <- function(category = NULL, language = NULL, country = NULL) {
   sources <- request %>%
     httr::content() %>%
     .[["sources"]] %>%
-    {do.call(rbind.data.frame, c(., stringsAsFactors=FALSE))}
+    {do.call(rbind.data.frame, c(., stringsAsFactors = FALSE))}
 
   return(sources)
 

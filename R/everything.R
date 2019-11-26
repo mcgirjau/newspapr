@@ -31,7 +31,7 @@ get_everything <- function(keyword = NULL, keyword_in_title = NULL, exact_match 
       stop("Invalid page parameter. Parameter page must be a whole, positive number, e.g. 5. Please try again", call. = FALSE)
     }
   }
-  if (!is.null(sources)){
+  if (!is.null(sources)) {
     # check that source is valid using list of sources from API endpoint
   }
   query_url <- .build_query_url(endpoint = "top-headlines", q = keyword, country = country_iso,
