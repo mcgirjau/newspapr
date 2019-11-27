@@ -48,8 +48,8 @@
 #'
 #' @examples
 #' get_everything(keyword = "Panama Canal", page_size = 10, page = 2)
-#' get_everything(country = "br", category = "sports")
-#' get_everything(keyword = "iPhone 10", source = "techcrunch")
+#' get_everything(language = "it", from = "2019-05-22)
+#' get_everything(title_keyword = "iPhone 10", domains = c("techcrunch.com", "engadget.com"))
 #'
 #' @export
 get_everything <- function(keyword = NULL, title_keyword = NULL, sources = NULL,

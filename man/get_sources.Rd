@@ -15,7 +15,7 @@ API returns sources of all categories.}
 \item{language}{(Optional) A string. Find sources that display news in a specific language.
 Possible options are: Arabic, German, English, Spanish, French, Hebrew, Italian
 Dutch, Norwegian, Portuguese, Russian, Swedish, Urdu, and Chinese. The language
-cam also be specified using ISO codes, e.g. "DE" for German or "ES" for Spanish.
+can also be specified using ISO codes, e.g. "DE" for German or "ES" for Spanish.
 By default, the API returns sources in all languages.}
 
 \item{country}{(Optional) A string. The 2-letter ISO 3166-1 code of the country you
@@ -30,7 +30,11 @@ language, and their country.
 \description{
 Returns the subset of news publishers that top headlines are available from.
 It's mainly a convenience function that can be used to keep track of the
-publishers available on the API.
+publishers available on the API. It seems a large amount of sources that do
+return top headlines are not included by NewsAPI in their output. As such,
+these sources cannot be used in a query, although they do return results.
+The complete index of sources that can be used in a NewsAPI query is obtained
+using get_sources().
 }
 \examples{
 get_sources(language = "German")

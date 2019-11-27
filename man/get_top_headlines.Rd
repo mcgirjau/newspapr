@@ -14,8 +14,8 @@ get_top_headlines(
 )
 }
 \arguments{
-\item{keyword}{(Optional) A string. Keyword(s) based on which to search for articles,
-such as "Hong Kong protests" or "Amazon forest".}
+\item{keyword}{(Optional) A string. Keyword(s) based on which to search for
+articles, such as "Hong Kong protests" or "Amazon forest".}
 
 \item{country}{(Optional) A string. The 2-letter ISO 3166-1 code of the country you
 want to get headlines for, such as "US" or "FR". This parameter cannot be mixed with
@@ -42,9 +42,9 @@ description, URL, publication date, and a short preview of the content.
 }
 \description{
 Returns a list of current top headlines articles based on some query. At least
-one parameter from among keyword, country_iso, category, and sources must be
+one parameter from among keyword, country, category, and sources must be
 specified, with the limitation that the sources parameter cannot be mixed with
-country_iso or category.
+country or category.
 }
 \examples{
 get_top_headlines(keyword = "Panama Canal", page_size = 10, page = 2)
