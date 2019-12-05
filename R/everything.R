@@ -107,14 +107,6 @@ get_everything <- function(keyword = NULL, title_keyword = NULL, sources = NULL,
     .check_page(page)
   }
 
-  # keywords must be URL-encoded
-  if (!is.null(keyword)) {
-    keyword <- URLencode(keyword)
-  }
-  if (!is.null(title_keyword)) {
-    title_keyword <- URLencode(title_keyword)
-  }
-
   query_url <- .build_query_url(endpoint = "everything", q = keyword,
                                 qInTitle = title_keyword, sources = sources,
                                 domains = domains, excludeDomains = exclude_domains,

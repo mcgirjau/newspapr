@@ -13,6 +13,7 @@
                             query = query),
                        class = "url")
 
+  # performs URL encoding automatically
   query_url <- httr::build_url(raw_url)
   return(query_url)
 }
